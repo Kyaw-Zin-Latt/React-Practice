@@ -1,18 +1,25 @@
 import './App.css';
+import { Routes, Route, Link } from "react-router-dom";
+import Home from './pages/Home';
+import About from './pages/About';
+import NotFound from './pages/NotFound';
+import { GithubProvider } from './context/github/GithubContext';
+import UserSearch from './components/users/UserSearch';
+import User from './components/users/User';
 
 function App() {
   return (
-    <div>
-      <h1 className="text-3xl text-sky-400 font-bold underline font-ubuntu">
-        Hello world!
-      </h1>
-      <button className='btn glass'>
-        Click
-      </button>
-      <div class="mockup-code">
-        <pre data-prefix="$"><code>npm i daisyui</code></pre>
+    <GithubProvider>
+      <div className=''>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/search" element={<UserSearch />} />
+          <Route path="/users/:login" element={<User />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </div>
-    </div>
+    </GithubProvider>
   );
 }
 
