@@ -2,6 +2,10 @@ import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import OAuth from '../components/OAuth';
+
 function SignIn() {
 
     const navigate = useNavigate();
@@ -12,6 +16,8 @@ function SignIn() {
     })
 
     const { email, password } = form;
+
+
 
     const onChange = (e) => {
 
@@ -27,15 +33,15 @@ function SignIn() {
         const auth = getAuth();
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                // Signed in 
                 const user = userCredential.user;
-                // ...
+                // console.log(userCredential);
                 navigate("/");
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.log(errorMessage);
+                toast.error("Your Email or Password is wrong!")
             });
 
 
@@ -82,6 +88,8 @@ function SignIn() {
                             </button>
                         </div>
                     </form>
+
+                    <OAuth />
 
                     <div className="text-center my-5">
                         <NavLink to="/sign-up" className="text-primary fw-bolder">Sign Up Instead</NavLink>

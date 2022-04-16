@@ -1,11 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Ubuntu:wght@300;400;500;700&display=swap');
 
-$font-family-sans-serif : 'Montserrat', sans-serif;
+$font-family-sans-serif : 'Montserrat',
+sans-serif;
 $border-radius: 1.25rem;
 $primary : #6366f1;
-
+$btn-padding-x: 2.10rem;
+$btn-padding-y: 0.8rem;
 
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import "../src/custom.css";
-@import "../node_modules/@fortawesome/fontawesome-free/css/all.min.css"
+@import "../node_modules/@fortawesome/fontawesome-free/css/all.min.css";
+@import '../node_modules/venobox/dist/venobox.min.css'

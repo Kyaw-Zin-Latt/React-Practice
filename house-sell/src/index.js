@@ -1,6 +1,9 @@
 import React from 'react';
 import { BrowserRouter } from "react-router-dom";
 import ReactDOM from 'react-dom';
+import '../node_modules/bootstrap/dist/js/bootstrap.bundle'
+import '../node_modules/venobox/dist/venobox.min'
+import './custom'
 import './style.css';
 import App from './App';
 

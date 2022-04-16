@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { db } from "../firebase.config"
-import { Navigate, NavLink, useNavigate } from 'react-router-dom'
-import { async } from '@firebase/util';
+import { NavLink, useNavigate } from 'react-router-dom'
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import OAuth from '../components/OAuth';
 
 
 function SignUp() {
@@ -28,6 +29,7 @@ function SignUp() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            // create new user auth
             const auth = getAuth();
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
@@ -36,6 +38,14 @@ function SignUp() {
                 displayName: name
             })
 
+            // add to firestore
+            const formDataCopy = { ...form }
+            delete formDataCopy.password;
+            formDataCopy.timestamp = serverTimestamp();
+
+            await setDoc(doc(db, "users", user.uid), formDataCopy)
+
+            // if success, go to home page
             navigate("/");
 
 
@@ -94,6 +104,8 @@ function SignUp() {
                         </div>
                     </form>
 
+                    <OAuth />
+                    
                     <div className="text-center my-5">
                         <NavLink to="/sign-in" className="text-primary fw-bolder">Sign In Instead</NavLink>
 

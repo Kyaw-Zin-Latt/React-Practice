@@ -7,7 +7,7 @@ import ListingItem from '../components/ListingItem';
 import Spinner from '../components/Spinner';
 import { db } from '../firebase.config';
 
-function Offer() {
+function Categories() {
 
     const params = useParams();
     const [listings, setListings] = useState(null);
@@ -19,8 +19,10 @@ function Offer() {
 
                 const listingsRef = collection(db, "listings");
 
-                const q = query(listingsRef, where('offer', '==', true), orderBy('timestamp', 'desc'), limit(10))
+                const q = query(listingsRef, where('type', '==', params.categoryName), orderBy('timestamp', 'desc'), limit(1))
                 const querySnapshot = await getDocs(q);
+
+                console.log(querySnapshot);
 
                 const listings = [];
 
@@ -40,26 +42,26 @@ function Offer() {
         }
 
         fetchListings()
-    },[]);
+    });
 
     return (
         <Layout>
             <h4 className='fw-bolder'>
-                Offers
+                {params.categoryName == 'rent' ? 'Places for rent' : 'Places for sell'}
             </h4>
             {loading ? <Spinner /> : listings && listings.length > 0 ?
                 <>
                     <div className='row'>
                         <div className="col-12 col-md-4">
                             {listings.map((listing) => (
-                                <ListingItem key={listing.id} listing={listing.data} id={listing.id} />
+                                <ListingItem listing={listing.data} id={listing.id} />
                             ))}
                         </div>
                     </div>
                 </>
-                : <p>There is no for {params.categoryName == 'rent' ? 'rent' : 'sell'}  rignt now</p>}
+                : <p>There is no for {params.categoryName == 'rent' ? 'rent' : 'sale'}  rignt now</p>}
         </Layout>
     )
 }
 
-export default Offer
+export default Categories
